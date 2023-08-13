@@ -222,7 +222,6 @@ func (c *GrpcClient) Query(ctx context.Context, collectionName string, partition
 		OutputFields:       outputFields,
 		PartitionNames:     partitionNames,
 		GuaranteeTimestamp: option.GuaranteeTimestamp,
-		TravelTimestamp:    option.TravelTimestamp,
 	}
 	if option.Offset > 0 {
 		req.QueryParams = append(req.QueryParams, &common.KeyValuePair{Key: offsetKey, Value: strconv.FormatInt(option.Offset, 10)})
@@ -312,7 +311,6 @@ func prepareSearchRequest(collName string, partitions []string,
 		OutputFields:       outputFields,
 		SearchParams:       searchParams,
 		GuaranteeTimestamp: opt.GuaranteeTimestamp,
-		TravelTimestamp:    opt.TravelTimestamp,
 		Nq:                 int64(len(vectors)),
 	}
 	return req, nil
@@ -397,10 +395,10 @@ func (c *GrpcClient) CalcDistance(ctx context.Context, collName string, partitio
 			return nil, err
 		}
 	}
-	if err := c.checkCollField(ctx, collName, opLeft.Name()); err != nil {
+	if err := c.checkCollField(ctx, collName, opLeft.Name(), isVectorField); err != nil {
 		return nil, err
 	}
-	if err := c.checkCollField(ctx, collName, opRight.Name()); err != nil {
+	if err := c.checkCollField(ctx, collName, opRight.Name(), isVectorField); err != nil {
 		return nil, err
 	}
 

@@ -377,3 +377,123 @@ func TestIndexAUTOINDEXSearchParam(t *testing.T) {
 	
 }
 
+func TestIndexGPUIvfFlatSearchParam(t *testing.T) {
+	
+	var nprobe int
+
+	t.Run("valid usage case", func(t *testing.T){
+		
+		nprobe = 10
+		idx0, err := NewIndexGPUIvfFlatSearchParam(
+			nprobe,
+		)
+		assert.Nil(t, err)
+		assert.NotNil(t, idx0)
+		assert.NotNil(t, idx0.Params())
+		
+	})
+	
+	t.Run("invalid usage case", func(t *testing.T){
+		
+		nprobe = 0
+		idx0, err := NewIndexGPUIvfFlatSearchParam(
+			nprobe,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx0)
+		
+		nprobe = 65537
+		idx1, err := NewIndexGPUIvfFlatSearchParam(
+			nprobe,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx1)
+		
+	})
+	
+}
+
+func TestIndexGPUIvfPQSearchParam(t *testing.T) {
+	
+	var nprobe int
+
+	t.Run("valid usage case", func(t *testing.T){
+		
+		nprobe = 10
+		idx0, err := NewIndexGPUIvfPQSearchParam(
+			nprobe,
+		)
+		assert.Nil(t, err)
+		assert.NotNil(t, idx0)
+		assert.NotNil(t, idx0.Params())
+		
+	})
+	
+	t.Run("invalid usage case", func(t *testing.T){
+		
+		nprobe = 0
+		idx0, err := NewIndexGPUIvfPQSearchParam(
+			nprobe,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx0)
+		
+		nprobe = 65537
+		idx1, err := NewIndexGPUIvfPQSearchParam(
+			nprobe,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx1)
+		
+	})
+	
+}
+
+func TestIndexSCANNSearchParam(t *testing.T) {
+	
+	var nprobe int
+	var reorder_k int
+
+	t.Run("valid usage case", func(t *testing.T){
+		
+		nprobe, reorder_k = 10, 200
+		idx0, err := NewIndexSCANNSearchParam(
+			nprobe,
+			reorder_k,
+		)
+		assert.Nil(t, err)
+		assert.NotNil(t, idx0)
+		assert.NotNil(t, idx0.Params())
+		
+	})
+	
+	t.Run("invalid usage case", func(t *testing.T){
+		
+		nprobe, reorder_k = 0, 200
+		idx0, err := NewIndexSCANNSearchParam(
+			nprobe,
+			reorder_k,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx0)
+		
+		nprobe, reorder_k = 65537, 200
+		idx1, err := NewIndexSCANNSearchParam(
+			nprobe,
+			reorder_k,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx1)
+		
+		nprobe, reorder_k = 10, -1
+		idx2, err := NewIndexSCANNSearchParam(
+			nprobe,
+			reorder_k,
+		)
+		assert.NotNil(t, err)
+		assert.Nil(t, idx2)
+		
+	})
+	
+}
+
